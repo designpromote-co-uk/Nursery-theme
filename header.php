@@ -46,6 +46,8 @@
 					<?php //get_search_form(); ?>
 				</nav><!-- #site-navigation -->
 			</div><!-- #navbar -->
+			<?php else: ?>
+			<?php add_filter( 'the_content', 'nursery_front_page_content' ); ?>
 			<?php endif; ?>
 		</header><!-- #masthead -->
 

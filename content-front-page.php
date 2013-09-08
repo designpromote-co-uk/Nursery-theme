@@ -39,58 +39,23 @@ if ( in_array( $title, $hide_titles ) ) {
 	</div><!-- .entry-summary -->
 	<?php else : ?>
 	<div class="entry-content">
-		<?php if ( 'Gallery' == $title ) : ?>
-		<?php $args = array(
-			'numberposts' => -1,
-			'order' => 'ASC',
-			'post_mime_type' => 'image',
-			'post_parent' => $post->ID,
-			'post_status' => null,
-			'post_type' => 'attachment',
-		);
-		$number_attachment = 0; 
-		$attachments = get_children( $args );
-		if ( $attachments ) {
-			foreach ( $attachments as $attachment ) {
-				//$number_attachment++;
-				if( ++$number_attachment > 2 ) break;
-				//$image_attributes = wp_get_attachment_image_src( $attachment->ID, 'thumbnail' )  ? wp_get_attachment_image_src( $attachment->ID, 'thumbnail' ) : wp_get_attachment_image_src( $attachment->ID, 'full' );
-				echo '<img src="' . wp_get_attachment_thumb_url( $attachment->ID ) . '" class="current">';
-			}
-		}
-		/* show up to 4 images from [gallery] and attachment */
-		$regex_pattern = get_shortcode_regex();
-		//var_dump( $regex_pattern );
-    preg_match ('/'.$regex_pattern.'/s', $post->post_content, $regex_matches);
-		//var_dump( $regex_matches[3] ); 
-		
-		if( $regex_matches ) :
-		preg_match_all( "/[0-9]+/", $regex_matches[3], $matches );
-		//var_dump( $matches );
-		//print_r( $matches );
-		$number_image = 0;
-		$total_image = 4 - $number_attachment;
-		foreach( $matches as $vals ) {
-			foreach( $vals as $val ) {
-				if( ++$number_image > $total_image ) break; 
-				echo wp_get_attachment_image( $val, array( 160, 160 ) );
-			}
-		}
-		endif;
-		?>
-		<?php elseif( 'Children Activities' == $title ):?>
-		<?php the_widget( 'zn_sparkle_WP_Widget_Recent_Posts', array( 'show_date'=>true, 'number'=>4 ) ); ?>
+		<?php if ( preg_match( '/gallery/i', $title ) ) : ?>
+		<a href="<?php the_permalink(); ?>" title="Gallery" rel="bookmark">
+		<?php nursery_front_page_gallery( $post->ID, $post->post_content ); ?>
+		</a>
+		<?php elseif( preg_match( '/children/i', $title ) ) : ?>
+		<?php the_widget( 'nursery_WP_Widget_Recent_Posts', array( 'show_date'=>true, 'number'=>4 ) ); ?>
 		
 		<?php else: ?>
 		<?php global $more; $more = 0; // turn on use Read More on pages ?>
-		<?php the_content( __( 'More <span class="meta-nav">&rarr;</span>', 'nursery' ) ); ?>
+		<?php the_content( __( 'More...<span class="meta-nav">&rarr;</span>', 'nursery' ) ); ?>
 		<?php wp_link_pages( array( 'before' => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'nursery' ) . '</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>' ) ); ?>
-		<?php endif; ?>
+		<?php endif; //gallery home-block ?>
 	</div><!-- .entry-content -->
-	<?php endif; ?>
+	<?php endif; //is_search() ?>
 
 	<footer class="entry-meta">
-		<?php if ( comments_open() && ! is_single() && ( 'Parents Comments' == $title ) ) : ?>
+		<?php if ( comments_open() && ! is_single() && ( preg_match( '/parent/i', $title ) ) ) : ?>
 			<div class="comments-link">
 				<?php comments_popup_link( '<span class="leave-reply">' . __( 'Leave a comment', 'nursery' ) . '</span>', __( 'One comment so far', 'nursery' ), __( 'View all % comments', 'nursery' ) ); ?>
 			</div><!-- .comments-link -->

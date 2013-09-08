@@ -3,7 +3,7 @@ Theme Name: Sparkles Nursery Theme
 Theme URI: http://designpromote.co.uk/wp2012/nursery
 Author: Designpromote.co.uk
 Author URI: http://designpromote.co.uk/
-Description: Metro style theme functioned to simplified to build responsive websites working on any device. Just create your pages to build your website. The theme is derived from Twenty Thirteen.
+Description: Metro style theme functioned to build your responsive website working on any device. Create pages and posts first, then your website is built. The theme is derived from Twenty Thirteen.
 Version: 1.0
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -2579,7 +2579,7 @@ footer.entry-meta {
 	padding: 20px;
 	word-wrap: break-word;
 }
-.home-block .widget {
+.home .widget {
 	background-color: transparent;
 	font-size: 16px;
 	margin: 0;
@@ -2592,7 +2592,9 @@ footer.entry-meta {
 .template-sparkle .widget .widget-title {
 	font-style: normal;
 }
-
+.home .widget .post-date {
+	font-size:80%;
+}
 .widget ul,
 .widget ol {
 	list-style-type: none;
@@ -2603,7 +2605,9 @@ footer.entry-meta {
 .widget li {
 	padding: 5px 0;
 }
-
+.home-block .widget li {
+	margin-bottom: 15px;
+}
 .widget .children li:last-child {
 	padding-bottom: 0;
 }
